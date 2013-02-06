@@ -35,7 +35,7 @@ FILES=\$(swift list $OBJDIR | grep "^$1")
 swift download $OBJDIR \$FILES
 )
 
-recon-all -subjid $1
+recon-all -subjid $1 -all
 # need to upload at this point.
 (
 cd \${SUBJECTS_DIR}
