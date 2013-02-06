@@ -37,7 +37,10 @@ swift download $OBJDIR \$FILES
 
 recon-all -subjid $1
 # need to upload at this point.
-
+(
+cd \${SUBJECTS_DIR}
+swift upload $OBJDIR $1
+)
 EOF
 
 qsub -N $jobname $TMPFILE
