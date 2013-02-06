@@ -15,6 +15,7 @@ trap 'rm -f $TMPFILE; exit 0' 0 1 2 3 14 15
 
 function doSubmit()
 {
+jobname=$1
 
 cat >$TMPFILE<<EOF
 #!/bin/bash
@@ -35,8 +36,11 @@ swift download $OBJDIR \$FILES
 )
 
 recon-all -subjid $1
+# need to upload at this point.
+
 EOF
 
+qsub -N $jobname $TMPFILE
 }
 
 for i in $(swift list -d / ${OBJDIR}) ; do
