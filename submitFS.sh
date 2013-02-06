@@ -25,7 +25,7 @@ cat >$TMPFILE<<EOF
 
 source ${HOME}/Nectar/nicreds.sh
 
-source ${FREESURFER}/SetupFreeSurfer.sh
+source ${FREESURFER}/SetUpFreeSurfer.sh
 
 export SUBJECTS_DIR=${LOCALSTORE}/
 
