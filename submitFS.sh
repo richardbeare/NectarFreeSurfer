@@ -5,6 +5,7 @@ LOGGING=/mnt/transient_nfs/ubuntu/Logging/
 SCRIPTS=/mnt/transient_nfs/ubuntu/Scripts/
 
 OBJDIR=GridData
+DESTDIR=GridDataProcessed
 
 LOCALSTORE=/mnt/Data/
 
@@ -39,7 +40,7 @@ recon-all -subjid $1 -all
 # need to upload at this point.
 (
 cd \${SUBJECTS_DIR}
-swift upload $OBJDIR $1
+swift upload $DESTDIR $1
 )
 EOF
 
