@@ -27,7 +27,7 @@ cat >$TMPFILE<<EOF
 source ${HOME}/Nectar/nicreds.sh
 
 source ${FREESURFER}/SetUpFreeSurfer.sh
-
+source ${HOME}/PyVirtEnv/bin/activate
 export SUBJECTS_DIR=${LOCALSTORE}/
 
 (
