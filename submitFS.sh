@@ -35,7 +35,7 @@ cd \${SUBJECTS_DIR}
 swift download $OBJDIR $1
 )
 
-recon-all -subjid $SID -i ${SUBJECTS_DIR}/$1 -all
+recon-all -subjid $SID -i \${SUBJECTS_DIR}/$1 -all
 
 # need to upload at this point.
 (
@@ -45,6 +45,7 @@ cd \${SUBJECTS_DIR}
 # tar the folder
 tar czf ${SID}.tgz ${SID}
 swift upload $DESTDIR ${SID}.tgz
+/bin/rm -rf ${SID}.tgz ${SID}
 )
 EOF
 
