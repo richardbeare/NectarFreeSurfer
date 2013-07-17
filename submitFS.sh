@@ -5,6 +5,7 @@ LOGGING=/mnt/transient_nfs/ubuntu/Logging/
 SCRIPTS=/mnt/transient_nfs/ubuntu/Scripts/
 
 OBJDIR=GridData
+DESTDIR=GridDataProcessed
 
 LOCALSTORE=/mnt/Data/
 
@@ -43,7 +44,7 @@ cd \${SUBJECTS_DIR}
 /bin/rm $1
 # tar the folder
 tar czf ${SID}.tgz ${SID}
-swift upload $OBJDIR ${SID}.tgz
+swift upload $DESTDIR ${SID}.tgz
 )
 EOF
 
