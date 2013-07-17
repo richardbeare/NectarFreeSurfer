@@ -8,15 +8,15 @@ OBJDIR=GridData
 
 LOCALSTORE=/mnt/Data/
 
-FREESURFER=/usr/local/freesurfer/5.1/
+FREESURFER=/mnt/transient_nfs/ubuntu/freesurfer/5.3/
 
 TMPFILE=$(mktemp) || exit 1
 trap 'rm -f $TMPFILE; exit 0' 0 1 2 3 14 15
 
 function doSubmit()
 {
-jobname=$1
-
+SID=${1/.nii.gz/}
+jobname=$SID
 cat >$TMPFILE<<EOF
 #!/bin/bash
 #\$ -S /bin/bash
@@ -31,22 +31,26 @@ export SUBJECTS_DIR=${LOCALSTORE}/
 
 (
 cd \${SUBJECTS_DIR}
-FILES=\$(swift list $OBJDIR | grep "^$1")
-swift download $OBJDIR \$FILES
+swift download $OBJDIR $1
 )
 
-recon-all -subjid $1 -all
+recon-all -subjid $SID -i ${SUBJECTS_DIR}/$1 -all
+
 # need to upload at this point.
 (
 cd \${SUBJECTS_DIR}
-swift upload $OBJDIR $1
+# delete the original nifti file
+/bin/rm $1
+# tar the folder
+tar czf ${SID}.tgz ${SID}
+swift upload $OBJDIR ${SID}.tgz
 )
 EOF
 
 qsub -N $jobname $TMPFILE
 }
 
-for i in $(swift list -d / ${OBJDIR}) ; do
+for i in $(swift list ${OBJDIR}) ; do
 # strip trailing /
 I=${i%%/}
 doSubmit $I
