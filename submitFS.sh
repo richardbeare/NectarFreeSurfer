@@ -9,7 +9,7 @@ DESTDIR=GridDataProcessed
 
 LOCALSTORE=/mnt/Data/
 
-FREESURFER=/mnt/transient_nfs/ubuntu/freesurfer/5.3/
+FREESURFER=/usr/local/freesurfer/5.3/
 
 TMPFILE=$(mktemp) || exit 1
 trap 'rm -f $TMPFILE; exit 0' 0 1 2 3 14 15
@@ -35,7 +35,7 @@ cd \${SUBJECTS_DIR}
 swift download $OBJDIR $1
 )
 
-recon-all -subjid $SID -i \${SUBJECTS_DIR}/$1 -all
+recon-all -openmp 2 -subjid $SID -i \${SUBJECTS_DIR}/$1 -all
 
 # need to upload at this point.
 (
