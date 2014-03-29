@@ -60,5 +60,6 @@ qsub -N $jobname $TMPFILE
 for i in $(swift list ${OBJDIR}) ; do
 # strip trailing /
 I=${i%%/}
+echo $I
 doSubmit $I
 done

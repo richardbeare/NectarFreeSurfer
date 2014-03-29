@@ -4,8 +4,8 @@ LOGGING=/mnt/transient_nfs/ubuntu/Logging/
 # any new binaries/scripts should be installed in here
 SCRIPTS=/mnt/transient_nfs/ubuntu/Scripts/
 
-OBJDIR=GridData
-DESTDIR=GridDataProcessed
+OBJDIR=Tascog2FreesurferInput
+DESTDIR=Tascog2FreesurferOutput
 
 LOCALSTORE=/mnt/Data/
 
@@ -35,7 +35,7 @@ cd \${SUBJECTS_DIR}
 swift download $OBJDIR $1
 )
 
-recon-all -openmp 2 -subjid $SID -i \${SUBJECTS_DIR}/$1 -all
+recon-all -subjid $SID -i \${SUBJECTS_DIR}/$1 -all
 
 # need to upload at this point.
 (
