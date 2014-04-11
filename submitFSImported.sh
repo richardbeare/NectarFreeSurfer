@@ -42,8 +42,8 @@ tar xzf /tmp/$bb
 /bin/rm /tmp/$bb
 )
 
-recon-all -subjid $SID -no-isrunning -make all
-
+#recon-all -subjid $SID -no-isrunning -make all
+recon-all -subjid $SID -no-isrunning -autorecon1 -autorecon2 -nofill -notessellate -nosmooth1 -noinflate1 -noqsphere -nofix -nowhite -nosmooth2 -noinflate2
 # need to upload at this point.
 (
 cd \${SUBJECTS_DIR}
