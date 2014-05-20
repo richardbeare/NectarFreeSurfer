@@ -6,12 +6,13 @@ LOGGING=/mnt/transient_nfs/ubuntu/Logging/
 # any new binaries/scripts should be installed in here
 SCRIPTS=/mnt/transient_nfs/ubuntu/Scripts/
 
-OBJDIR=Tascog2FreesurferInput
-DESTDIR=Tascog2FreesurferOutput
+OBJDIR=Tascog3FreesurferInput
+DESTDIR=Tascog3FreesurferOutput
 
 LOCALSTORE=/mnt/Data/
 
-FREESURFER=/usr/local/freesurfer/5.3/
+#FREESURFER=/usr/local/freesurfer/5.3/
+FREESURFER=${LOCALSTORE}/freesurfer/5.3/
 
 TMPFILE=$(mktemp) || exit 1
 trap 'rm -f $TMPFILE; exit 0' 0 1 2 3 14 15
@@ -57,9 +58,17 @@ EOF
 qsub -N $jobname $TMPFILE
 }
 
+#qstat -r | grep Full | awk '{print $3}' > /tmp/donefs
+. ${HOME}/Nectar/nicreds.sh
+
+. ${HOME}/PyVirtEnv/bin/activate
+
 for i in $(swift list ${OBJDIR}) ; do
+#DONE=$(grep ${i/.tgz/} /tmp/donefs)
+#if [ -z "${DONE}" ] ; then
 # strip trailing /
 I=${i%%/}
 echo $I
 doSubmit $I
+#fi
 done

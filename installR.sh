@@ -9,9 +9,6 @@ SCRIPTS=/mnt/transient_nfs/ubuntu/Scripts/
 
 LOCALSTORE=/mnt/Data/
 
-#FREESURFER=/usr/local/freesurfer/5.3/
-FREESURFER=${LOCALSTORE}/freesurfer/5.3/
-
 TMPFILE=$(mktemp) || exit 1
 trap 'rm -f $TMPFILE; exit 0' 0 1 2 3 14 15
 
@@ -20,8 +17,6 @@ function doSubmit()
 HOST=$1
 jobname=$HOST
 
-## set up the download commands
-SW1="swift download SoftwareBucket fs5.3.tgz"
 
 
 cat >$TMPFILE<<EOF
@@ -30,24 +25,17 @@ cat >$TMPFILE<<EOF
 #\$ -o $LOGGING/${jobname}.stdout
 #\$ -e $LOGGING/${jobname}.stderr
 
-source ${HOME}/Nectar/nicreds.sh
-source ${HOME}/PyVirtEnv/bin/activate
-
-
-(
-cd $LOCALSTORE
-#if [ ! -d freesurfer/5.3 ] ; then 
-   $SW1
-   tar xzf fs5.3.tgz
-   /bin/rm fs5.3.tgz
-#fi
-)
+#sudo cp /mnt/transient_nfs/ubuntu/NectarFreeSurfer/R.sources.list /etc/apt/sources.list.d/
+#sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+#sudo apt-get update
+#sudo apt-get -y install r-base-dev
+sudo R --file=/mnt/transient_nfs/ubuntu/NectarFreeSurfer/install.R
 EOF
 
 qsub -N $jobname -q all.q@${HOST} $TMPFILE
 }
 
-#for i in $(grep server /etc/hosts |grep -v $(hostname) | awk '{print $3}' ) ; do
-for i in $(cat missingfs ) ; do
+for i in $(grep server /etc/hosts |grep -v $(hostname) | awk '{print $3}' ) ; do
+#for i in $(cat missingfs ) ; do
 doSubmit $i
 done
