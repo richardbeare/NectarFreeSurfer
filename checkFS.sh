@@ -36,18 +36,14 @@ source ${HOME}/PyVirtEnv/bin/activate
 
 (
 cd $LOCALSTORE
-#if [ ! -d freesurfer/5.3 ] ; then 
-   $SW1
-   tar xzf fs5.3.tgz
-   /bin/rm fs5.3.tgz
-#fi
+/bin/rm -rf ??? 
+#du -sh freesurfer
 )
 EOF
 
 qsub -N $jobname -q all.q@${HOST} $TMPFILE
 }
 
-#for i in $(grep server /etc/hosts |grep -v $(hostname) | awk '{print $3}' ) ; do
-for i in $(cat missingfs ) ; do
+for i in $(grep server /etc/hosts |grep -v $(hostname) | awk '{print $3}' ) ; do
 doSubmit $i
 done
