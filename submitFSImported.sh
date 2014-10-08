@@ -6,8 +6,8 @@ LOGGING=/mnt/transient_nfs/ubuntu/Logging/
 # any new binaries/scripts should be installed in here
 SCRIPTS=/mnt/transient_nfs/ubuntu/Scripts/
 
-OBJDIR=Tascog3FreesurferInput
-DESTDIR=Tascog3FreesurferOutput
+OBJDIR=CDOT2FreesurferInput
+DESTDIR=CDOT2FreesurferOutput
 
 LOCALSTORE=/mnt/Data/
 
@@ -21,7 +21,7 @@ function doSubmit()
 {
 bb=$(basename $1)
 SID=${bb/.tgz/}
-jobname=$SID
+jobname=fs2_$SID
 cat >$TMPFILE<<EOF
 #!/bin/bash
 #\$ -S /bin/bash
@@ -43,8 +43,8 @@ tar xzf /tmp/$bb
 /bin/rm /tmp/$bb
 )
 
-#recon-all -subjid $SID -no-isrunning -make all
-recon-all -subjid $SID -no-isrunning -autorecon1 -autorecon2 -nofill -notessellate -nosmooth1 -noinflate1 -noqsphere -nofix -nowhite -nosmooth2 -noinflate2
+recon-all -subjid $SID -make all -no-isrunning
+#recon-all -subjid $SID -no-isrunning -autorecon1 -autorecon2 -nofill -notessellate -nosmooth1 -noinflate1 -noqsphere -nofix -nowhite -nosmooth2 -noinflate2
 # need to upload at this point.
 (
 cd \${SUBJECTS_DIR}
@@ -54,7 +54,6 @@ swift upload $DESTDIR ${SID}.tgz
 /bin/rm -rf ${SID}.tgz ${SID}
 )
 EOF
-
 qsub -N $jobname $TMPFILE
 }
 

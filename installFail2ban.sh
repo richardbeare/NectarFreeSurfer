@@ -27,17 +27,15 @@ cat >$TMPFILE<<EOF
 
 if [ ! -e /etc/apt/sources.list.d/R.sources.list ] ; then
 sudo cp /mnt/transient_nfs/ubuntu/NectarFreeSurfer/R.sources.list /etc/apt/sources.list.d/
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
 sudo apt-get update
-sudo apt-get -y install r-base-dev
-sudo R --file=/mnt/transient_nfs/ubuntu/NectarFreeSurfer/install.R
+sudi apt-get install fail2ban -y
 fi
 EOF
 
 qsub -N $jobname -q all.q@${HOST} $TMPFILE
 }
 
-for i in $(grep server /etc/hosts |grep -v $(hostname) | awk '{print $3}' ) ; do
+for i in $(grep server /etc/hosts |grep -v $(hostname) | awk '{print $3}'  ) ; do
 #for i in $(cat missingfs ) ; do
 doSubmit $i
 done

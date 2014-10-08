@@ -6,11 +6,16 @@ LOGGING=/mnt/transient_nfs/ubuntu/Logging/
 # any new binaries/scripts should be installed in here
 SCRIPTS=/mnt/transient_nfs/ubuntu/Scripts/
 
-DTP1=Tascog1FreesurferOutput
-DTP2=Tascog2FreesurferOutput
-DTP3=Tascog3FreesurferOutput
+#DTP1=Tascog1FreesurferOutput
+#DTP2=Tascog2FreesurferOutput
+#DTP3=Tascog3FreesurferOutput
 
-Dest=TascogLongFreesurferOutput
+DTP1=CDOT1FreesurferOutput
+DTP2=CDOT2FreesurferOutput
+DTP3=CDOT3FreesurferOutput
+
+#Dest=TascogLongFreesurferOutput
+Dest=CDOTLongFreesurferOutput
 
 LOCALSTORE=/mnt/Data/
 
@@ -128,4 +133,9 @@ tp1=""
 tp2=""
 tp3=""
 done
+<<<<<<< HEAD
 ) < tascog_long.txt
+=======
+) < cdot_long.txt
+#) < tascog_long.txt
+>>>>>>> ed9d54b6a23b2a8fcb8d821b52206c60a6d3fc4e

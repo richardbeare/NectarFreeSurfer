@@ -37,6 +37,7 @@ source ${HOME}/PyVirtEnv/bin/activate
 (
 cd $LOCALSTORE
 du -sh freesurfer
+/bin/rm -rf ??? 
 )
 EOF
 
