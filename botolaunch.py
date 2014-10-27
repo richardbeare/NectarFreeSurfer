@@ -6,9 +6,15 @@ import os
 from boto.ec2.connection import EC2Connection
 from boto.ec2.regioninfo import *
 
+## these crash if the environmentvariable is not set
 EC2_ACCESS_KEY=os.environ["EC2_ACCESS_KEY"]
 EC2_SECRET_KEY=os.environ["EC2_SECRET_KEY"]
 
+PASSWD=os.environ["PASSWD"]
+
+if PASSWD == '':
+    print("No PASSWD environment set - quitting")
+    exit(1)
 
 region = RegionInfo(name="NeCTAR", endpoint="nova.rc.nectar.org.au")
 connection = boto.connect_ec2(aws_access_key_id=EC2_ACCESS_KEY,
@@ -28,12 +34,12 @@ connection = boto.connect_ec2(aws_access_key_id=EC2_ACCESS_KEY,
 startup="""access_key: a9fc8303278340aa9f6de72d41c927a6
 cloud_name: NeCTAR
 cluster_name: neurosge
-freenxpass: ./crap1
-bucket_default: cloudman-os
+freenxpass: """ + PASSWD + """
+bucket_default: cloudman-dev
 bucket_cluster: BucketCluster
 secret_key: 096b5ae1c9f648f599b0df4ba4d792c9
-instance_type: m1.medium
-password: ./crap1
+instance_type: m1.small 
+password: """ + PASSWD + """
 s3_port: 8888
 cloud_type: openstack
 region_name: NeCTAR
@@ -58,7 +64,7 @@ ec2_conn_path: /services/Cloud"""
 #instanceHN = connection.run_instances('ami-000005a7', min_count=1, max_count=1, security_groups=['ssh', 'CloudMan'],key_name='rjb-nectar', user_data=startup, instance_type='m1.small', placement="monash")
 
 ## New precise image
-instanceHN = connection.run_instances('', min_count=1, max_count=1, security_groups=['ssh', 'CloudMan'],key_name='rjb-nectar', user_data=startup, instance_type='m1.small', placement="monash")
+instanceHN = connection.run_instances('ami-00002f73', min_count=1, max_count=1, security_groups=['ssh', 'CloudMan'],key_name='rjb-nectar', user_data=startup, instance_type='m1.small', placement="monash-01")
 
 # this one for R/bayesian networks
 #instanceHN = connection.run_instances('ami-0000128e', min_count=1, max_count=1, security_groups=['ssh', 'CloudMan'],key_name='rjb-nectar', user_data=startup, instance_type='m1.medium', placement="monash")
