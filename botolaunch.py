@@ -6,6 +6,7 @@ import os
 from boto.ec2.connection import EC2Connection
 from boto.ec2.regioninfo import *
 
+## these crash if the environmentvariable is not set
 EC2_ACCESS_KEY=os.environ["EC2_ACCESS_KEY"]
 EC2_SECRET_KEY=os.environ["EC2_SECRET_KEY"]
 
@@ -56,7 +57,7 @@ ec2_conn_path: /services/Cloud"""
 # This one for freesurfer
 #instanceHN = connection.run_instances('ami-000005a7', min_count=1, max_count=1, security_groups=['ssh', 'CloudMan'],key_name='rjb-nectar', user_data=startup, instance_type='m1.small', placement="monash")
 
-## New precise image
+## New trusty image
 instanceHN = connection.run_instances('ami-00002f73', min_count=1, max_count=1, security_groups=['ssh', 'CloudMan'],key_name='rjb-nectar', user_data=startup, instance_type='m1.small', placement="monash")
 
 # this one for R/bayesian networks
